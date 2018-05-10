@@ -131,6 +131,8 @@ public int[] parseDate(String date){
 
     return month_day;
 }
+
+
 public int[] parseTime(String time){
 
     int[] hour_minute = new int[2];
@@ -237,51 +239,5 @@ public String ToString(){
         return "this is a test";
 }
 
-
-    //parsing/tokenizer function
-    //params: string parsee
-    //purporse: tokenize text
-   /* public boolean CommandParse (String text){
-        tokens = text.split(delim);
-        //need: title, date, time
-        //example: title lunch with friend date february (twenty third | tenth) two thousand eighteen time twelve (thirty five | ten)
-        ArrayList<String> title = new ArrayList<String>();
-        ArrayList<String> date = new ArrayList<String>();
-        ArrayList<String> time = new ArrayList<String>();
-        //potential error: invalid syntax, use of keyword in title, empty title
-        for(int i = 0; i < tokens.length; i++){
-            if(tokens[i] == "title"){
-                //build string until date, time, or end
-                i++;
-                while((tokens[i] != "date")&&(tokens[i] != "time")&&(i < tokens.length)){
-                    title.add(tokens[i++]);
-                }
-                break;
-            }
-            else if (tokens[i] == "date") {
-                //build string until time or end
-                i++;
-                while ((tokens[i] != "title") && (tokens[i] != "time") && (i < tokens.length)) {
-                    date.add(tokens[i++]);
-                }
-                break;
-            }
-            else if(tokens[i] == "time") {
-                i++;
-                while ((tokens[i] != "date") && (tokens[i] != "title") && (i < tokens.length)) {
-                    time.add(tokens[i++]);
-                }
-                break;
-            }
-            else {
-
-                    ResetEventFields();
-                    return false;
-                // break; //never reached
-            }
-
-        }
-        return true;
-    }*/
 }
 
