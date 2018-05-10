@@ -144,34 +144,34 @@ public class PocketSphinxActivity extends Activity implements
         button_confirm.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 recognizer.stop();
-                ticker++;  // Code here executes on main thread after user presses button
-                /*if(ticker == 1)//title
-                    ((TextView) findViewById(R.id.textView_title)).setText(String.format("%s",ticker));//for testing
-                else if(ticker == 2)//date
-                    ((TextView) findViewById(R.id.textView_date)).setText(String.format("%s",ticker));//for testing
-                else if(ticker == 3)//time
-                    ((TextView) findViewById(R.id.textView_time)).setText(String.format("%s",ticker));//for testing
-                else{//keep this
-                    ticker = 0;
-                    ((TextView) findViewById(R.id.textView_title)).setText(R.string.title);
-                    ((TextView) findViewById(R.id.textView_date)).setText(R.string.date);
-                    ((TextView) findViewById(R.id.textView_time)).setText(R.string.time);
-                }*/
+                ticker++;
+
+                //push event
                 if (ticker > 2) {
                     String title = ((TextView) findViewById(R.id.textView_title)).getText().toString();
                     String date = ((TextView) findViewById(R.id.textView_date)).getText().toString();
                     String time = ((TextView) findViewById(R.id.textView_time)).getText().toString();
-                    if (!date.equals(" ")&& !time.equals(" ") && !date.equals(R.string.date)&& !time.equals(R.string.time)&&
-                            !date.equals("wakeup") && !time.equals("wakeup")) {
-                        int response = mod.CreateEvent(title, date, time);
+                    //check for bad input
+                    if (date.equals(" ")|| time.equals(" ") ||
+                            date.equals(R.string.date)|| time.equals(R.string.time)||
+                            date.equals("wakeup") || time.equals("wakeup")) {
+                        ((TextView) findViewById(R.id.caption_text)).setText(R.string.invalid_general);
+                    }else{
+                        //set up the event
+                        /*responses:
+                            1   successfully created
+                            -1  given an empty string
+                            -2  given an invalid date; e.g. June 31st
+                        */
+                        int response = mod.createEvent(title, date, time);
                         if (response == 1) { //success
                             mod.pushEvent(getApplicationContext());
                         }else if(response == -1)
                             ((TextView) findViewById(R.id.caption_text)).setText(R.string.invalid_general);
                         else
                             ((TextView) findViewById(R.id.caption_text)).setText(R.string.invalid_date);
-                    }else
-                        ((TextView) findViewById(R.id.caption_text)).setText(R.string.invalid_general);
+                    }
+
                     ResetView();
                 }
             }
@@ -190,7 +190,7 @@ public class PocketSphinxActivity extends Activity implements
         // so we execute it in async task
         new SetupTask(this).execute();
     }
-
+    //Event is presumed pushed or cancelled -> clear the screen
     private void ResetView() {
         ticker = 0;  // Code here executes on main thread after user presses button
         ((TextView) findViewById(R.id.textView_title)).setText(R.string.title);
@@ -255,7 +255,6 @@ public class PocketSphinxActivity extends Activity implements
         }
     }
 
-    /*
         /**
          * In partial result we get quick updates about current hypothesis. In
          * keyword spotting mode we can react here, in other modes we need to wait
@@ -330,20 +329,18 @@ public class PocketSphinxActivity extends Activity implements
             recognizer.startListening(searchName);
         else
             recognizer.startListening(searchName, 10000);
-
-        //String caption = getResources().getString(captions.get(searchName));
-        //((TextView) findViewById(R.id.caption_text)).setText(caption);
         ((TextView) findViewById(R.id.caption_text)).setText("");
 
     }
 
-    //j: asset designation
+    //Sets up the speech recognizer
     private void setupRecognizer(File assetsDir) throws IOException {
         // The recognizer can be configured to perform multiple searches
         // of different kind and switch between them
 
+        // asset designation
         recognizer = SpeechRecognizerSetup.defaultSetup()
-                .setAcousticModel(new File(assetsDir, "en-us-ptm"))
+                .setAcousticModel(new File(assetsDir, "en-us-adapt"))
                 .setDictionary(new File(assetsDir, "cmudict-en-us.dict"))
 
                 .setRawLogDir(assetsDir) // To disable logging of raw audio comment out this call (takes a lot of space on the device)
