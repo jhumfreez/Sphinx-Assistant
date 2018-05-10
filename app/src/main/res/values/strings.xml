@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name">Sphinx Assistant</string>
+
+    <string name="button_talk">Push To Talk</string>
+    <string name="button_confirm">Confirm</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="title">::Title::</string>
+    <string name="date">::Date::</string>
+    <string name="time">::Time::</string>
+    <string name="invalid_general">Error: Invalid Format</string>
+    <string name="invalid_date">Error: Invalid Date</string>
+</resources>
