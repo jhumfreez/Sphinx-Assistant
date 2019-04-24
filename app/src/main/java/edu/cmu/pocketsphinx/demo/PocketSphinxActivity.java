@@ -76,16 +76,13 @@ public class PocketSphinxActivity extends Activity implements
     private static final String LM_SEARCH = "language";
     private static Model mod = new Model();
 
-    /* Keyword we are looking for to activate menu */
-    // private static final String KEYPHRASE = "make an event";
-
     /* Used to handle permission request */
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
     private static final int PERMISSIONS_REQUEST_READ_CALENDAR = 1;
     private static final int PERMISSIONS_REQUEST_WRITE_CALENDAR = 1;
     private SpeechRecognizer recognizer;
 
-    //proceed through event set up
+    // Proceed through event set up
     private int ticker = 0;
     private boolean listening = false;
 
@@ -106,13 +103,13 @@ public class PocketSphinxActivity extends Activity implements
             return;
         }
 
-        //check read calendar permissions
+        // Check read calendar permissions
         int checkr = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CALENDAR);
         if (checkr != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALENDAR}, PERMISSIONS_REQUEST_READ_CALENDAR);
             return;
         }
-        //check write calendar permissions
+        // Check write calendar permissions
         int checkw = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_CALENDAR);
         if (checkw != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CALENDAR}, PERMISSIONS_REQUEST_WRITE_CALENDAR);
@@ -146,7 +143,7 @@ public class PocketSphinxActivity extends Activity implements
                 recognizer.stop();
                 ticker++;
 
-                //push event
+                // Push event
                 if (ticker > 2) {
                     String title = ((TextView) findViewById(R.id.textView_title)).getText().toString();
                     String date = ((TextView) findViewById(R.id.textView_date)).getText().toString();
@@ -157,16 +154,10 @@ public class PocketSphinxActivity extends Activity implements
                             date.equals("wakeup") || time.equals("wakeup")) {
                         ((TextView) findViewById(R.id.caption_text)).setText(R.string.invalid_general);
                     }else{
-                        //set up the event
-                        /*responses:
-                            1   successfully created
-                            -1  given an empty string
-                            -2  given an invalid date; e.g. June 31st
-                        */
                         int response = mod.createEvent(title, date, time);
-                        if (response == 1) { //success
+                        if (response == 1) { // Success
                             mod.pushEvent(getApplicationContext());
-                        }else if(response == -1)
+                        }else if(response == -1) // Error
                             ((TextView) findViewById(R.id.caption_text)).setText(R.string.invalid_general);
                         else
                             ((TextView) findViewById(R.id.caption_text)).setText(R.string.invalid_date);
@@ -177,7 +168,7 @@ public class PocketSphinxActivity extends Activity implements
             }
         });
 
-        //Handle cancel button click
+        // Handle cancel button click
         final Button button_cancel = findViewById(R.id.button_cancel);
         button_cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -190,7 +181,7 @@ public class PocketSphinxActivity extends Activity implements
         // so we execute it in async task
         new SetupTask(this).execute();
     }
-    //Event is presumed pushed or cancelled -> clear the screen
+    // Event is presumed pushed or cancelled -> clear the screen
     private void ResetView() {
         ticker = 0;  // Code here executes on main thread after user presses button
         ((TextView) findViewById(R.id.textView_title)).setText(R.string.title);
@@ -320,7 +311,7 @@ public class PocketSphinxActivity extends Activity implements
             Search(KWS_SEARCH);
     }
 
-    //j:set text to search result
+    // Acquire speech result
     private void Search(String searchName) {
         recognizer.stop();
 
@@ -333,7 +324,7 @@ public class PocketSphinxActivity extends Activity implements
 
     }
 
-    //Sets up the speech recognizer
+    // Sets up the speech recognizer
     private void setupRecognizer(File assetsDir) throws IOException {
         // The recognizer can be configured to perform multiple searches
         // of different kind and switch between them
