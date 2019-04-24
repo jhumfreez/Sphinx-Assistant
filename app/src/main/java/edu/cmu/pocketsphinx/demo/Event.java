@@ -1,5 +1,5 @@
-//Event.java
-//stores event information to be added to calendar
+// Event.java
+// Stores event information to be added to calendar
 package edu.cmu.pocketsphinx.demo;
 
 
@@ -8,48 +8,48 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 
 public class Event {
-    //fields
+    
    private String title;
    private Calendar start;
    private Calendar end;
 
-    //constructor
+    // Constructor
     public Event(String title, Calendar s, Calendar e){
         this.title = title;
         start = s;
         end = e;
     }
 
-    //returns title of event
+    // Returns title of event
     public String getTitle(){
         return title;
     }
 
-    //returns year of event
+    // Returns year of event
     @RequiresApi(api = Build.VERSION_CODES.N)
     public int getYear(){
     return start.get(Calendar.YEAR);
     }
 
-    //returns day of event
+    // Returns day of event
     @RequiresApi(api = Build.VERSION_CODES.N)
     public int getDay(){
         return start.get(Calendar.DAY_OF_MONTH);
     }
 
-    //returns month of event
+    // Returns month of event
     @RequiresApi(api = Build.VERSION_CODES.N)
     public int getMonth(){
         return start.get(Calendar.MONTH);
     }
 
-    //returns beginning time of event
+    // Returns beginning time of event
     @RequiresApi(api = Build.VERSION_CODES.N)
     public long getBegin() {
         return start.getTimeInMillis();
     }
 
-    //returns end time of event
+    // Returns end time of event
     @RequiresApi(api = Build.VERSION_CODES.N)
     public long getEnd() {
         return end.getTimeInMillis();
