@@ -274,18 +274,16 @@ public class PocketSphinxActivity extends Activity implements
         ((TextView) findViewById(R.id.result_text)).setText("");//default
         if (hypothesis != null) {
             String text = hypothesis.getHypstr();
-            //prints the hypothesis in black bubble
+            //prints the hypothesis
             makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
 
             if (ticker == 0)
-                ((TextView) findViewById(R.id.textView_title)).setText(text);//Search(text);
+                ((TextView) findViewById(R.id.textView_title)).setText(text);
             else if (ticker == 1){
-                //int[] d = mod.parseDate(text);
-                ((TextView) findViewById(R.id.textView_date)).setText(text);//d[0] +" "+ d[1]);
+                ((TextView) findViewById(R.id.textView_date)).setText(text);
                 }
             else if (ticker == 2){
-                //int[] t = mod.parseTime(text);
-                ((TextView) findViewById(R.id.textView_time)).setText(text);//t[0]+" "+ t[1]);
+                ((TextView) findViewById(R.id.textView_time)).setText(text);
                 }
         }
     }
