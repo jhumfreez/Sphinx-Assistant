@@ -1,5 +1,5 @@
-//Model.java
-//creates, validates, and manages calendar events
+// Model.java
+// Creates, validates, and manages calendar events
 package edu.cmu.pocketsphinx.demo;
 
 import android.Manifest;
@@ -22,13 +22,12 @@ import java.util.Arrays;
 
 public class Model {
 
-    //fields
-    //list of events
+    // List of events
     private ArrayList<Event> events = new ArrayList<>();
-    //delimiter for tokenizer
+    // Delimiter for tokenizer
     private String delim = " ";
 
-    //format checking
+    // Format checking
     private final String[] VALID_MONTHS = {
             "january", "february", "march", "april",
             "may", "june", "july", "august",
@@ -80,7 +79,7 @@ public class Model {
     private final String[] SINGLE_DIGITS = Arrays.copyOfRange(VALID_HOURS, 0, 8);
 
 
-    //constructor
+    // Constructor
     public Model() {
 
     }
